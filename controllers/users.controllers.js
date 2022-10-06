@@ -43,7 +43,7 @@ const usersPost = async (req = request, res = response) => {
 const usersPut = async (req = request, res = response) => {
 
     const { id } = req.params;
-    const { password, google, correo, ...resto } = req.body;
+    const { _id, password, google, correo, ...resto } = req.body;
 
     //Validar contra DB
     if (password) {
