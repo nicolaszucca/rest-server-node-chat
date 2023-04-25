@@ -2,8 +2,11 @@ const express = require('express');
 const { check } = require('express-validator');
 
 
-const { validarCampos } = require('../middlewares/validar-campos');
-const { validarJWT } = require('../middlewares/validar-jwt');
+// const { validarCampos } = require('../middlewares/validar-campos');
+// const { validarJWT } = require('../middlewares/validar-jwt');
+// const { esAdminRol, tieneRol } = require('../middlewares/validar-rol');
+//Forma para importar todo de forma resumida y codeClean:
+const { validarJWT, validarCampos, esAdminRol, tieneRol } = require('../middlewares');
 
 const { isValidRole, emailExist, existUserById } = require('../helpers/db-validators')
 
@@ -41,6 +44,8 @@ router.patch('/', usersPatch)
 
 router.delete('/:id', [
     validarJWT,
+    // esAdminRol,
+    tieneRol("ADMIN_ROLE"),
     check('id', 'No es un id válido').isMongoId(),
     check('id').custom(id => existUserById(id)),
     validarCampos
