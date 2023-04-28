@@ -21,6 +21,12 @@
         data-size="large" data-locale="es-419" data-logo_alignment="left">
     </div>
 
+
+    <button id="google-signout"
+        style="margin-top: 10px; padding: 8px 10px; border:none; border-radius: 15px; color: white; background-color: #222; cursor: pointer; ">
+        Signout
+    </button>
+
     <script src="https://accounts.google.com/gsi/client" defer></script>
     <script>
         function handleCredentialResponse(response) {
@@ -28,9 +34,30 @@
             // to decode the credential response.
 
             // const responsePayload = decodeJwtResponse(response.credential);
+            const body = { id_token: response.credential };
 
-            console.log(response.credential);
+            fetch('http://localhost:8080/api/auth/google', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    localStorage.setItem('email', data.usuario.correo);
+                })
+                .catch(console.warn);
         }
+
+        const button = document.querySelector('#google-signout');
+        button.addEventListener('click', () => {
+            google.accounts.id.revoke(localStorage.getItem('email'), done => {
+                localStorage.clear();
+                location.reload();
+            });
+        })
     </script>
 </body>
 
