@@ -13,12 +13,14 @@ const UsuarioSchema = Schema({
     password: {
         type: String,
         required: [true, 'La contraseña es obligatoria'],
+        // required: [this.google === false, 'La contraseña es obligatoria'],
     },
     img: String,
     rol: {
         type: String,
         required: true,
-        emun: ['ADMIN_ROLE', 'USER_ROLE']
+        default: 'USER_ROLE',
+        // emun: ['ADMIN_ROLE', 'USER_ROLE']
     },
     estado: { type: Boolean, default: true },
     google: { type: Boolean, default: false },
