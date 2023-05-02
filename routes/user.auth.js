@@ -11,7 +11,6 @@ const router = express.Router();
 
 router.post('/login', [
     check('correo', 'El correo es obligatorio').not().isEmpty(),
-    check('correo').custom(correo => emailExist(correo)),
     check('password', 'La contraseña es obligatoria').not().isEmpty(),
     validarCampos
 ], login);
