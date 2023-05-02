@@ -1,5 +1,6 @@
-const Role = require('../models/role')
-const Usuario = require('../models/user')
+const Role = require('../models/role');
+const Usuario = require('../models/user');
+const Categoria = require('../models/categoria');
 
 
 const isValidRole = async (rol = '') => {
@@ -23,9 +24,22 @@ const existUserById = async (id) => {
     }
 }
 
+const existeCategoria = async (id) => {
+    const categorieExist = await Categoria.findById(id);
+
+    if (!categorieExist) {
+        throw new Error(`La categoria con id: ${id} no existe`);
+    }
+
+    if (!categorieExist.estado) {
+        throw new Error(`La categoria ha sido deshabilitada`);
+    }
+}
+
 
 module.exports = {
     isValidRole,
     emailExist,
-    existUserById
+    existUserById,
+    existeCategoria
 }
