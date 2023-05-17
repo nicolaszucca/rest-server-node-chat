@@ -50,11 +50,22 @@ const existeProducto = async (id) => {
     }
 }
 
+//validar colecciones permitidas
+const coleccionValida = async (collection) => {
+    const collections = ['usuarios', 'productos'];
+
+    if (!collections.includes(collection)) {
+        throw new Error(`La coleccion: ${collection} no existe`);
+    }
+
+    return true
+}
 
 module.exports = {
     isValidRole,
     emailExist,
     existUserById,
     existeCategoria,
-    existeProducto
+    existeProducto,
+    coleccionValida,
 }
